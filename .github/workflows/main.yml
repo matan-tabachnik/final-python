@@ -1,1 +1,33 @@
 
+name: Checkout Build and Push Docker Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+
+
+  CI:
+    
+      runs-on: ubuntu-latest
+  
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+  
+      - name: build docker image node
+        run:  docker build . --file Dockerfile --tag matantabachnik/final-python:${{ github.run_number }}-${{ github.sha }}
+
+
+      # - name: Login to Docker Hub
+      #   run: docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      # - name: Push Docker node image to Docker Hub
+      #   run: docker push  tomershafran1/super-app:node-${{ github.run_number }}-${{ github.sha }}
+
+      # - name: Push Docker php image to Docker Hub
+      #   run: docker push  tomershafran1/super-app:php-${{ github.run_number }}-${{ github.sha }}
